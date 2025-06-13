@@ -1,25 +1,11 @@
-2025-06-12T16:42:01.323+0300	INFO	Проект запущен
-2025-06-12T16:42:08.396+0300	INFO	Запрос: 	{"command": "SET name1 dad"}
-2025-06-12T16:42:08.397+0300	INFO	Запрос преобразован в структуру	{"head": "SET", "arg1": "name1", "arg2": "dad"}
-2025-06-12T16:42:08.397+0300	INFO	Команда	{"SET": "Успешно"}
-2025-06-12T16:42:14.212+0300	INFO	Запрос: 	{"command": "SET name2 mom"}
-2025-06-12T16:42:14.212+0300	INFO	Запрос преобразован в структуру	{"head": "SET", "arg1": "name2", "arg2": "mom"}
-2025-06-12T16:42:14.212+0300	INFO	Команда	{"SET": "Успешно"}
-2025-06-12T16:42:19.635+0300	INFO	Запрос: 	{"command": "SET name3 dad"}
-2025-06-12T16:42:19.636+0300	INFO	Запрос преобразован в структуру	{"head": "SET", "arg1": "name3", "arg2": "dad"}
-2025-06-12T16:42:19.636+0300	INFO	Команда	{"SET": "Успешно"}
-2025-06-12T16:42:32.825+0300	INFO	Запрос: 	{"command": "GET name3"}
-2025-06-12T16:42:32.825+0300	INFO	Запрос преобразован в структуру	{"head": "GET", "arg1": "name3", "arg2": ""}
-2025-06-12T16:42:32.825+0300	INFO	Команда	{"GET": "Успешно"}
-2025-06-12T16:43:02.449+0300	INFO	Запрос: 	{"command": "DEL arf dad"}
-2025-06-12T16:43:02.449+0300	ERROR	Неверное кол-во аргументов в запросе	{"commmand": "DEL arf dad"}
-2025-06-12T16:43:02.449+0300	ERROR	Неверный запрос: 	{"command": "DEL arf dad"}
-2025-06-12T16:43:13.535+0300	INFO	Запрос: 	{"command": "GET name4"}
-2025-06-12T16:43:13.535+0300	INFO	Запрос преобразован в структуру	{"head": "GET", "arg1": "name4", "arg2": ""}
-2025-06-12T16:43:13.535+0300	ERROR	Команда	{"GET": "Несуществующий ключ"}
-2025-06-12T16:43:21.180+0300	INFO	Запрос: 	{"command": "DEL name1"}
-2025-06-12T16:43:21.180+0300	INFO	Запрос преобразован в структуру	{"head": "DEL", "arg1": "name1", "arg2": ""}
-2025-06-12T16:43:21.180+0300	INFO	Команда	{"DEL": "Успешно"}
-2025-06-12T16:43:25.074+0300	INFO	Запрос: 	{"command": "GET name1"}
-2025-06-12T16:43:25.074+0300	INFO	Запрос преобразован в структуру	{"head": "GET", "arg1": "name1", "arg2": ""}
-2025-06-12T16:43:25.074+0300	ERROR	Команда	{"GET": "Несуществующий ключ"}
+2025-06-13T21:18:52.941+0300	INFO	project launch
+2025-06-13T21:18:56.436+0300	INFO	request received by worker	{"command": "SET name1 name"}
+2025-06-13T21:18:56.436+0300	INFO	command	{"SET": "successfully"}
+2025-06-13T21:19:04.368+0300	INFO	request received by worker	{"command": "SET name2 nameing"}
+2025-06-13T21:19:04.368+0300	INFO	command	{"SET": "successfully"}
+2025-06-13T21:19:07.665+0300	INFO	request received by worker	{"command": "GET name2"}
+2025-06-13T21:19:07.665+0300	INFO	command	{"GET": "successfully"}
+2025-06-13T21:19:13.303+0300	INFO	request received by worker	{"command": "DEL name2"}
+2025-06-13T21:19:13.303+0300	INFO	command	{"DEL": "ssuccessfully"}
+2025-06-13T21:19:17.207+0300	INFO	request received by worker	{"command": "GET name2"}
+2025-06-13T21:19:17.207+0300	ERROR	command	{"GET": "non-existent key"}

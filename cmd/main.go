@@ -3,14 +3,37 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"in_memory_key_value/internal/compute"
-	"in_memory_key_value/logger"
 	"os"
+	"sync"
+
+	"github.com/limon4ik-black/in_memory_key_value/internal/compute"
+	"github.com/limon4ik-black/in_memory_key_value/internal/logger"
 )
 
 func main() {
 	logger.StartLog()
-	logger.Log.Infow("Проект запущен")
+	logger.Log.Infow("project launch")
+
+	var wg sync.WaitGroup
+
+	channel := make(chan string, 100)
+
+	workerCount := 10
+
+	for i := 0; i < workerCount; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			for command := range channel {
+				logger.Log.Infow("request received by worker", "command", command)
+				flg, _ := compute.Reception(command)
+				if !flg {
+					fmt.Println("wrong request")
+					logger.Log.Errorw("wrong request: ", "command", command)
+				}
+			}
+		}()
+	}
 
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
@@ -18,10 +41,9 @@ func main() {
 			break
 		}
 		command := scanner.Text()
-		logger.Log.Infow("Запрос: ", "command", command)
-		if !compute.Reception(command) {
-			fmt.Println("Неверный запрос")
-			logger.Log.Errorw("Неверный запрос: ", "command", command)
-		}
+		channel <- command
 	}
+
+	close(channel)
+	wg.Wait()
 }

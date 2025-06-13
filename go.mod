@@ -1,4 +1,5 @@
-module in_memory_key_value
+module github.com/limon4ik-black/in_memory_key_value
+
 
 go 1.24.2
 

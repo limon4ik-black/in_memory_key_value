@@ -24,7 +24,7 @@ func Init() error {
 func StartLog() {
 	err := Init()
 	if err != nil {
-		panic("Ошибка инициализации логгера: " + err.Error())
+		panic("error initializing worker: " + err.Error())
 	}
 	defer Log.Sync()
 
