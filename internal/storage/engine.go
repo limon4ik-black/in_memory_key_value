@@ -9,58 +9,73 @@ import (
 	"github.com/limon4ik-black/in_memory_key_value/internal/model"
 )
 
-var mapa = make(map[string]string)
-var mutex sync.RWMutex
+var globalStorage = NewStorage()
+
+//var mapa = make(map[string]string)
+//var mutex sync.RWMutex
+
+type Storage struct {
+	mapa  map[string]string
+	mutex sync.RWMutex
+}
+
+func NewStorage() *Storage {
+	return &Storage{mapa: make(map[string]string), mutex: sync.RWMutex{}}
+}
 
 func Distribution(query model.Query) {
+	globalStorage.Distribution(query)
+}
+
+func (s *Storage) Distribution(query model.Query) {
 	if query.Head == "SET" {
-		HandleSet(query.Argument1, query.Argument2)
+		s.HandleSet(query.Argument1, query.Argument2)
 	}
 
 	if query.Head == "GET" {
-		HandleGet(query.Argument1)
+		s.HandleGet(query.Argument1)
 	}
 
 	if query.Head == "DEL" {
-		HandleDel(query.Argument1)
+		s.HandleDel(query.Argument1)
 	}
 }
 
-func HandleSet(arg1 string, arg2 string) { //хуй пойми, что вернуть
-	mutex.Lock()
-	mapa[arg1] = arg2
-	mutex.Unlock()
+func (s *Storage) HandleSet(arg1 string, arg2 string) { //хуй пойми, что вернуть
+	s.mutex.Lock()
+	s.mapa[arg1] = arg2
+	s.mutex.Unlock()
 	fmt.Println("data saved successfully")
 	logger.Log.Infow("command", "SET", "successfully")
 }
 
-func HandleGet(arg1 string) (string, error) {
-	mutex.RLock()
-	value, ok := mapa[arg1]
-	mutex.RUnlock()
+func (s *Storage) HandleGet(arg1 string) (string, error) {
+	s.mutex.RLock()
+	value, ok := s.mapa[arg1]
+	s.mutex.RUnlock()
 	if ok {
 		fmt.Println(value)
 		logger.Log.Infow("command", "GET", "successfully")
 		return value, nil
-	} else {
-		fmt.Println("such a key does not exist")
-		logger.Log.Errorw("command", "GET", "non-existent key")
-		return "", errors.NonExistent()
 	}
+	fmt.Println("such a key does not exist")
+	logger.Log.Errorw("command", "GET", "non-existent key")
+	return "", errors.NonExistent()
+
 }
 
-func HandleDel(arg1 string) (bool, error) {
-	mutex.Lock()
-	_, ok := mapa[arg1]
-	delete(mapa, arg1)
-	mutex.Unlock()
+func (s *Storage) HandleDel(arg1 string) (bool, error) {
+	s.mutex.Lock()
+	_, ok := s.mapa[arg1]
+	delete(s.mapa, arg1)
+	s.mutex.Unlock()
 	if ok {
 		fmt.Println("data deleted")
-		logger.Log.Infow("command", "DEL", "ssuccessfully")
+		logger.Log.Infow("command", "DEL", "successfully")
 		return ok, nil
-	} else {
-		fmt.Println("such a key does not exist")
-		logger.Log.Errorw("command", "DEL", "non-existent key")
-		return ok, errors.NonExistent()
 	}
+	fmt.Println("such a key does not exist")
+	logger.Log.Errorw("command", "DEL", "non-existent key")
+	return ok, errors.NonExistent()
+
 }

@@ -26,8 +26,8 @@ func main() {
 			defer wg.Done()
 			for command := range channel {
 				logger.Log.Infow("request received by worker", "command", command)
-				flg, _ := compute.Reception(command)
-				if !flg {
+				err := compute.Reception(command)
+				if err != nil {
 					fmt.Println("wrong request")
 					logger.Log.Errorw("wrong request: ", "command", command)
 				}

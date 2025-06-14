@@ -14,7 +14,7 @@ func (e *ErrorLI) Error() string {
 }
 
 func DoSomething() error {
-	return &ErrorLI{Code: 401, Msg: "XZ"}
+	return &ErrorLI{Code: 001, Msg: "XZ"}
 }
 
 func NonExistent() error {
