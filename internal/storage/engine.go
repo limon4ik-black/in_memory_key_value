@@ -20,7 +20,7 @@ type Storage struct {
 }
 
 func NewStorage() *Storage {
-	return &Storage{mapa: make(map[string]string), mutex: sync.RWMutex{}}
+	return &Storage{mapa: make(map[string]string)}
 }
 
 func Distribution(query model.Query) {
@@ -29,19 +29,19 @@ func Distribution(query model.Query) {
 
 func (s *Storage) Distribution(query model.Query) {
 	if query.Head == "SET" {
-		s.HandleSet(query.Argument1, query.Argument2)
+		s.Set(query.Argument1, query.Argument2)
 	}
 
 	if query.Head == "GET" {
-		s.HandleGet(query.Argument1)
+		s.Get(query.Argument1)
 	}
 
 	if query.Head == "DEL" {
-		s.HandleDel(query.Argument1)
+		s.Del(query.Argument1)
 	}
 }
 
-func (s *Storage) HandleSet(arg1 string, arg2 string) { //хуй пойми, что вернуть
+func (s *Storage) Set(arg1 string, arg2 string) { //хуй пойми, что вернуть
 	s.mutex.Lock()
 	s.mapa[arg1] = arg2
 	s.mutex.Unlock()
@@ -49,7 +49,7 @@ func (s *Storage) HandleSet(arg1 string, arg2 string) { //хуй пойми, ч�
 	logger.Log.Infow("command", "SET", "successfully")
 }
 
-func (s *Storage) HandleGet(arg1 string) (string, error) {
+func (s *Storage) Get(arg1 string) (string, error) {
 	s.mutex.RLock()
 	value, ok := s.mapa[arg1]
 	s.mutex.RUnlock()
@@ -64,7 +64,7 @@ func (s *Storage) HandleGet(arg1 string) (string, error) {
 
 }
 
-func (s *Storage) HandleDel(arg1 string) (bool, error) {
+func (s *Storage) Del(arg1 string) (bool, error) {
 	s.mutex.Lock()
 	_, ok := s.mapa[arg1]
 	delete(s.mapa, arg1)

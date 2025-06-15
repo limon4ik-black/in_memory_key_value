@@ -1,8 +1,11 @@
-2025-06-14T16:23:01.828+0300	INFO	project launch
-2025-06-14T16:23:03.825+0300	INFO	request received by worker	{"command": "SET name1"}
-2025-06-14T16:23:03.826+0300	ERROR	incorrect number of arguments in the query	{"commmand": "SET name1"}
-2025-06-14T16:23:03.826+0300	ERROR	wrong request: 	{"command": "SET name1"}
-2025-06-14T16:23:09.622+0300	INFO	request received by worker	{"command": "SET name1 rwnwr"}
-2025-06-14T16:23:09.622+0300	INFO	command	{"SET": "successfully"}
-2025-06-14T16:23:12.612+0300	INFO	request received by worker	{"command": "GET name1"}
-2025-06-14T16:23:12.613+0300	INFO	command	{"GET": "successfully"}
+2025-06-15T18:05:14.629+0300	INFO	project launch
+2025-06-15T18:05:18.779+0300	INFO	request received by worker	{"command": "SET afe hwbef"}
+2025-06-15T18:05:18.779+0300	INFO	command	{"SET": "successfully"}
+2025-06-15T18:05:21.747+0300	INFO	request received by worker	{"command": "SET kw wrh"}
+2025-06-15T18:05:21.747+0300	INFO	command	{"SET": "successfully"}
+2025-06-15T18:05:24.981+0300	INFO	request received by worker	{"command": "GET kw"}
+2025-06-15T18:05:24.981+0300	INFO	command	{"GET": "successfully"}
+2025-06-15T18:05:31.540+0300	INFO	request received by worker	{"command": "DEL kw"}
+2025-06-15T18:05:31.540+0300	INFO	command	{"DEL": "successfully"}
+2025-06-15T18:05:34.742+0300	INFO	request received by worker	{"command": "GET kw"}
+2025-06-15T18:05:34.743+0300	ERROR	command	{"GET": "non-existent key"}

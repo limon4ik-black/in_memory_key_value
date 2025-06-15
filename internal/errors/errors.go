@@ -22,17 +22,17 @@ func NonExistent() error {
 }
 
 func IncorrectNOW() error {
-	return &ErrorLI{Code: 998, Msg: "non-existent key"}
+	return &ErrorLI{Code: 998, Msg: "incorrect number of words"}
 }
 
 func IncorrectNOA() error {
-	return &ErrorLI{Code: 997, Msg: "non-existent key"}
+	return &ErrorLI{Code: 997, Msg: "incorrect number of arguments"}
 }
 
 func IncorrectCommandWord() error {
-	return &ErrorLI{Code: 996, Msg: "non-existent key"}
+	return &ErrorLI{Code: 996, Msg: "incorrect command word"}
 }
 
 func IncorrectSymbols() error {
-	return &ErrorLI{Code: 995, Msg: "non-existent key"}
+	return &ErrorLI{Code: 995, Msg: "incorrect symbols"}
 }
