@@ -1,7 +1,7 @@
 module github.com/limon4ik-black/in_memory_key_value
 
 
-go 1.24.2
+go 1.24
 
 require (
 	go.uber.org/multierr v1.10.0 // indirect
