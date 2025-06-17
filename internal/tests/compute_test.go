@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/limon4ik-black/in_memory_key_value/internal/compute"
-	"github.com/limon4ik-black/in_memory_key_value/internal/errors"
+	"github.com/limon4ik-black/in_memory_key_value/internal/custome_errors"
 	"github.com/limon4ik-black/in_memory_key_value/internal/logger"
 )
 
@@ -27,6 +27,10 @@ func TestReception(t *testing.T) {
 		expected error
 	}{
 		{
+			command:  "",
+			expected: custome_errors.QueryIsEmpty(),
+		},
+		{
 			command:  "SET arg1 arg2",
 			expected: nil,
 		},
@@ -40,31 +44,31 @@ func TestReception(t *testing.T) {
 		},
 		{
 			command:  "SET",
-			expected: errors.IncorrectNOA(),
+			expected: custome_errors.IncorrectNOA(),
 		},
 		{
 			command:  "GET",
-			expected: errors.IncorrectNOA(),
+			expected: custome_errors.IncorrectNOA(),
 		},
 		{
 			command:  "DEL",
-			expected: errors.IncorrectNOA(),
+			expected: custome_errors.IncorrectNOA(),
 		},
 		{
 			command:  "set arg1 arg2",
-			expected: errors.IncorrectCommandWord(),
+			expected: custome_errors.IncorrectCommandWord(),
 		},
 		{
 			command:  "get arg1",
-			expected: errors.IncorrectCommandWord(),
+			expected: custome_errors.IncorrectCommandWord(),
 		},
 		{
 			command:  "del arg1",
-			expected: errors.IncorrectCommandWord(),
+			expected: custome_errors.IncorrectCommandWord(),
 		},
 		{
 			command:  "GET arg1()",
-			expected: errors.IncorrectSymbols(),
+			expected: custome_errors.IncorrectSymbols(),
 		},
 	}
 

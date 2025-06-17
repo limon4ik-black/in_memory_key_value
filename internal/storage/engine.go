@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/limon4ik-black/in_memory_key_value/internal/errors"
+	"github.com/limon4ik-black/in_memory_key_value/internal/custome_errors"
 	"github.com/limon4ik-black/in_memory_key_value/internal/logger"
 	"github.com/limon4ik-black/in_memory_key_value/internal/model"
 )
@@ -33,11 +33,17 @@ func (s *Storage) Distribution(query model.Query) {
 	}
 
 	if query.Head == "GET" {
-		s.Get(query.Argument1)
+		_, err := s.Get(query.Argument1)
+		if err != nil {
+			logger.Log.Errorw("command", "GET", "pu-pu-pum")
+		}
 	}
 
 	if query.Head == "DEL" {
-		s.Del(query.Argument1)
+		_, err := s.Del(query.Argument1)
+		if err != nil {
+			logger.Log.Errorw("command", "DEL", "pu-pu-pum")
+		}
 	}
 }
 
@@ -60,7 +66,7 @@ func (s *Storage) Get(arg1 string) (string, error) {
 	}
 	fmt.Println("such a key does not exist")
 	logger.Log.Errorw("command", "GET", "non-existent key")
-	return "", errors.NonExistent()
+	return "", custome_errors.NonExistent()
 
 }
 
@@ -76,6 +82,6 @@ func (s *Storage) Del(arg1 string) (bool, error) {
 	}
 	fmt.Println("such a key does not exist")
 	logger.Log.Errorw("command", "DEL", "non-existent key")
-	return ok, errors.NonExistent()
+	return ok, custome_errors.NonExistent()
 
 }

@@ -1,7 +1,7 @@
-2025-06-15T18:02:41.346+0300	INFO	command	{"SET": "successfully"}
-2025-06-15T18:02:41.346+0300	INFO	command	{"GET": "successfully"}
-2025-06-15T18:02:41.346+0300	INFO	command	{"GET": "successfully"}
-2025-06-15T18:02:41.346+0300	ERROR	command	{"GET": "non-existent key"}
-2025-06-15T18:02:41.346+0300	INFO	command	{"DEL": "successfully"}
-2025-06-15T18:02:41.346+0300	ERROR	command	{"GET": "non-existent key"}
-2025-06-15T18:02:41.346+0300	ERROR	command	{"DEL": "non-existent key"}
+2025-06-17T09:08:50.384+0300	INFO	command	{"SET": "successfully"}
+2025-06-17T09:08:50.384+0300	INFO	command	{"GET": "successfully"}
+2025-06-17T09:08:50.384+0300	INFO	command	{"GET": "successfully"}
+2025-06-17T09:08:50.384+0300	ERROR	command	{"GET": "non-existent key"}
+2025-06-17T09:08:50.384+0300	INFO	command	{"DEL": "successfully"}
+2025-06-17T09:08:50.384+0300	ERROR	command	{"GET": "non-existent key"}
+2025-06-17T09:08:50.384+0300	ERROR	command	{"DEL": "non-existent key"}

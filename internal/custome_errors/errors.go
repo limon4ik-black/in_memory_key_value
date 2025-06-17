@@ -1,4 +1,4 @@
-package errors
+package custome_errors
 
 import (
 	"fmt"
@@ -35,4 +35,8 @@ func IncorrectCommandWord() error {
 
 func IncorrectSymbols() error {
 	return &ErrorLI{Code: 995, Msg: "incorrect symbols"}
+}
+
+func QueryIsEmpty() error {
+	return &ErrorLI{Code: 994, Msg: "query is empty"}
 }

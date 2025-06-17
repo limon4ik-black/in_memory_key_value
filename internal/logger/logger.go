@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"fmt"
 	"os"
 
 	"go.uber.org/zap"
@@ -26,6 +27,10 @@ func StartLog() {
 	if err != nil {
 		panic("error initializing worker: " + err.Error())
 	}
-	defer Log.Sync()
+	defer func() {
+		if err := Log.Sync(); err != nil {
+			fmt.Println("Logger sync failed:", err)
+		}
+	}()
 
 }
