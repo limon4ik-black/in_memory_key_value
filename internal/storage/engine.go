@@ -23,36 +23,40 @@ func NewStorage() *Storage {
 	return &Storage{mapa: make(map[string]string)}
 }
 
-func Distribution(query model.Query) {
-	globalStorage.Distribution(query)
+func Distribution(query model.Query) (string, error) {
+	return globalStorage.Distribution(query)
 }
 
-func (s *Storage) Distribution(query model.Query) {
+func (s *Storage) Distribution(query model.Query) (string, error) {
 	if query.Head == "SET" {
-		s.Set(query.Argument1, query.Argument2)
+		return s.Set(query.Argument1, query.Argument2)
 	}
 
 	if query.Head == "GET" {
-		_, err := s.Get(query.Argument1)
-		if err != nil {
-			logger.Log.Errorw("command", "GET", "pu-pu-pum")
-		}
+		return s.Get(query.Argument1)
+		// _, err := s.Get(query.Argument1)
+		// if err != nil {
+		// 	logger.Log.Errorw("command", "GET", "pu-pu-pum")
+		// }
 	}
 
 	if query.Head == "DEL" {
-		_, err := s.Del(query.Argument1)
-		if err != nil {
-			logger.Log.Errorw("command", "DEL", "pu-pu-pum")
-		}
+		return s.Del(query.Argument1)
+		// _, err := s.Del(query.Argument1)
+		// if err != nil {
+		// 	logger.Log.Errorw("command", "DEL", "pu-pu-pum")
+		// }
 	}
+	return "", nil
 }
 
-func (s *Storage) Set(arg1 string, arg2 string) { //хуй пойми, что вернуть
+func (s *Storage) Set(arg1 string, arg2 string) (string, error) { //хуй пойми, что вернуть
 	s.mutex.Lock()
 	s.mapa[arg1] = arg2
 	s.mutex.Unlock()
-	fmt.Println("data saved successfully")
+	//fmt.Println("data saved successfully")
 	logger.Log.Infow("command", "SET", "successfully")
+	return "data saved successfully", nil
 }
 
 func (s *Storage) Get(arg1 string) (string, error) {
@@ -70,18 +74,18 @@ func (s *Storage) Get(arg1 string) (string, error) {
 
 }
 
-func (s *Storage) Del(arg1 string) (bool, error) {
+func (s *Storage) Del(arg1 string) (string, error) {
 	s.mutex.Lock()
 	_, ok := s.mapa[arg1]
 	delete(s.mapa, arg1)
 	s.mutex.Unlock()
 	if ok {
-		fmt.Println("data deleted")
+		//fmt.Println("data deleted")
 		logger.Log.Infow("command", "DEL", "successfully")
-		return ok, nil
+		return "data deleted", nil
 	}
-	fmt.Println("such a key does not exist")
+	//fmt.Println("such a key does not exist")
 	logger.Log.Errorw("command", "DEL", "non-existent key")
-	return ok, custome_errors.NonExistent()
+	return "such a key does not exist", custome_errors.NonExistent()
 
 }

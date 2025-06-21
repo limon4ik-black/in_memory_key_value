@@ -1,5 +1,9 @@
-2025-06-17T08:57:02.091+0300	INFO	project launch
-2025-06-17T08:57:22.392+0300	INFO	request received by worker	{"command": "SET name names"}
-2025-06-17T08:57:22.393+0300	INFO	command	{"SET": "successfully"}
-2025-06-17T08:57:26.744+0300	INFO	request received by worker	{"command": "GET name"}
-2025-06-17T08:57:26.744+0300	INFO	command	{"GET": "successfully"}
+2025-06-21T16:19:45.997+0300	INFO	project launch
+2025-06-21T16:20:00.824+0300	INFO	command	{"SET": "successfully"}
+2025-06-21T16:20:08.668+0300	INFO	command	{"SET": "successfully"}
+2025-06-21T16:20:14.012+0300	INFO	command	{"SET": "successfully"}
+2025-06-21T16:20:21.613+0300	INFO	command	{"GET": "successfully"}
+2025-06-21T16:20:29.009+0300	ERROR	incorresct command word in request	{"command": "set vdv hfjs"}
+2025-06-21T16:20:32.790+0300	ERROR	incorresct command word in request	{"command": "fr ru\\"}
+2025-06-21T16:20:35.494+0300	ERROR	incorresct command word in request	{"command": "get hrv"}
+2025-06-21T16:20:38.355+0300	ERROR	incorresct command word in request	{"command": "Get rvrv"}
