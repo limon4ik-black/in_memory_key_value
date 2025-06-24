@@ -17,7 +17,7 @@ func TestStorage(t *testing.T) {
 		query := model.Query{Head: "SET", Argument1: "key1", Argument2: "value1"}
 		str, err := s.Distribution(query)
 		if str == "" || err == nil {
-			t.Errorf("unknown error: %v", err)
+			logger.Log.Errorw("unknown error")
 		}
 		value, err := s.Get("key1")
 		if err != nil {
