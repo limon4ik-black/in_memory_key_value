@@ -5,6 +5,7 @@ import (
 	"net"
 
 	"github.com/limon4ik-black/in_memory_key_value/internal/compute"
+	"github.com/limon4ik-black/in_memory_key_value/internal/logger"
 )
 
 func Processing() {
@@ -13,7 +14,11 @@ func Processing() {
 		fmt.Println(err)
 		return
 	}
-	defer listener.Close()
+	defer func() {
+		if err := listener.Close(); err != nil {
+			logger.Log.Errorw("failed to close conn: %v", err)
+		}
+	}()
 
 	workerCount := 10
 	channel := make(chan net.Conn)
@@ -39,7 +44,11 @@ func workers(connChan <-chan net.Conn) {
 }
 
 func HandleConnections(conn net.Conn) {
-	defer conn.Close()
+	defer func() {
+		if err := conn.Close(); err != nil {
+			logger.Log.Errorw("failed to close conn: %v", err)
+		}
+	}()
 	for {
 		input := make([]byte, (1024 * 4))
 		n, err := conn.Read(input)
@@ -53,7 +62,11 @@ func HandleConnections(conn net.Conn) {
 
 		fmt.Println(query, "-", target)
 
-		conn.Write([]byte(target))
+		_, errs := conn.Write([]byte(target))
+		if errs != nil {
+			logger.Log.Errorw("failed to write to conn: %v", err)
+
+		}
 
 	}
 }

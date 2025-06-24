@@ -6,6 +6,8 @@ import (
 	"net"
 	"os"
 	"strings"
+
+	"github.com/limon4ik-black/in_memory_key_value/internal/logger"
 )
 
 func main() {
@@ -14,7 +16,11 @@ func main() {
 		fmt.Println("Ошибка подключения:", err)
 		return
 	}
-	defer conn.Close()
+	defer func() {
+		if err := conn.Close(); err != nil {
+			logger.Log.Errorw("failed to close conn: %v", err)
+		}
+	}()
 
 	reader := bufio.NewReader(os.Stdin)
 
@@ -24,7 +30,7 @@ func main() {
 			fmt.Println("Ошибка ввода:", err)
 			continue
 		}
-		text = strings.TrimSpace(text) // убираем \n
+		text = strings.TrimSpace(text)
 
 		_, err = conn.Write([]byte(text))
 		if err != nil {

@@ -15,8 +15,10 @@ func TestStorage(t *testing.T) {
 	t.Run("SET operation", func(t *testing.T) {
 
 		query := model.Query{Head: "SET", Argument1: "key1", Argument2: "value1"}
-		s.Distribution(query)
-
+		str, err := s.Distribution(query)
+		if str == "" || err == nil {
+			t.Errorf("unknown error: %v", err)
+		}
 		value, err := s.Get("key1")
 		if err != nil {
 			t.Errorf("GET after SET failed: %v", err)
@@ -44,12 +46,9 @@ func TestStorage(t *testing.T) {
 
 	t.Run("DEL operation", func(t *testing.T) {
 
-		ok, err := s.Del("key1")
+		_, err := s.Del("key1")
 		if err != nil {
 			t.Errorf("DEL failed: %v", err)
-		}
-		if !ok {
-			t.Error("DEL should return true for existing key")
 		}
 
 		_, err = s.Get("key1")
@@ -57,13 +56,11 @@ func TestStorage(t *testing.T) {
 			t.Error("GET should fail for deleted key")
 		}
 
-		ok, err = s.Del("non_existent")
+		_, err = s.Del("non_existent")
 		if err == nil {
 			t.Error("DEL should fail for non-existent key")
 		}
-		if ok {
-			t.Error("DEL should return false for non-existent key")
-		}
+
 	})
 
 }

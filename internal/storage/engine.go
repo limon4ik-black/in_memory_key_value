@@ -11,9 +11,6 @@ import (
 
 var globalStorage = NewStorage()
 
-//var mapa = make(map[string]string)
-//var mutex sync.RWMutex
-
 type Storage struct {
 	mapa  map[string]string
 	mutex sync.RWMutex
@@ -34,27 +31,18 @@ func (s *Storage) Distribution(query model.Query) (string, error) {
 
 	if query.Head == "GET" {
 		return s.Get(query.Argument1)
-		// _, err := s.Get(query.Argument1)
-		// if err != nil {
-		// 	logger.Log.Errorw("command", "GET", "pu-pu-pum")
-		// }
 	}
 
 	if query.Head == "DEL" {
 		return s.Del(query.Argument1)
-		// _, err := s.Del(query.Argument1)
-		// if err != nil {
-		// 	logger.Log.Errorw("command", "DEL", "pu-pu-pum")
-		// }
 	}
 	return "", nil
 }
 
-func (s *Storage) Set(arg1 string, arg2 string) (string, error) { //хуй пойми, что вернуть
+func (s *Storage) Set(arg1 string, arg2 string) (string, error) {
 	s.mutex.Lock()
 	s.mapa[arg1] = arg2
 	s.mutex.Unlock()
-	//fmt.Println("data saved successfully")
 	logger.Log.Infow("command", "SET", "successfully")
 	return "data saved successfully", nil
 }
@@ -70,7 +58,7 @@ func (s *Storage) Get(arg1 string) (string, error) {
 	}
 	fmt.Println("such a key does not exist")
 	logger.Log.Errorw("command", "GET", "non-existent key")
-	return "", custome_errors.NonExistent()
+	return "such a key does not exist", custome_errors.NonExistent()
 
 }
 
@@ -80,11 +68,9 @@ func (s *Storage) Del(arg1 string) (string, error) {
 	delete(s.mapa, arg1)
 	s.mutex.Unlock()
 	if ok {
-		//fmt.Println("data deleted")
 		logger.Log.Infow("command", "DEL", "successfully")
 		return "data deleted", nil
 	}
-	//fmt.Println("such a key does not exist")
 	logger.Log.Errorw("command", "DEL", "non-existent key")
 	return "such a key does not exist", custome_errors.NonExistent()
 

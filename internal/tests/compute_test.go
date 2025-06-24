@@ -73,7 +73,7 @@ func TestReception(t *testing.T) {
 	}
 
 	for _, testcase := range testTable {
-		result := compute.Reception(testcase.command)
+		_, result := compute.Reception(testcase.command)
 
 		if !compareErrors(result, testcase.expected) {
 			t.Errorf("Incorrect result for command '%s'. Expect %v, got %v",
