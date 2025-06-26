@@ -25,18 +25,16 @@ func Distribution(query model.Query) (string, error) {
 }
 
 func (s *Storage) Distribution(query model.Query) (string, error) {
-	if query.Head == "SET" {
+	switch query.Head {
+	case "SET":
 		return s.Set(query.Argument1, query.Argument2)
-	}
-
-	if query.Head == "GET" {
+	case "GET":
 		return s.Get(query.Argument1)
-	}
-
-	if query.Head == "DEL" {
+	case "DEL":
 		return s.Del(query.Argument1)
+	default:
+		return "", nil
 	}
-	return "", nil
 }
 
 func (s *Storage) Set(arg1 string, arg2 string) (string, error) {

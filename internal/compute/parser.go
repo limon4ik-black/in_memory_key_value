@@ -46,7 +46,6 @@ func Reception(command string) (string, error) {
 		}
 	}
 
-	//Parse(command)
 	return Parse(command)
 }
 

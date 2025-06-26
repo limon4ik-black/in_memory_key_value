@@ -3,16 +3,21 @@ package server
 import (
 	"fmt"
 	"net"
+	"os"
 
 	"github.com/limon4ik-black/in_memory_key_value/internal/compute"
+	"github.com/limon4ik-black/in_memory_key_value/internal/config"
 	"github.com/limon4ik-black/in_memory_key_value/internal/logger"
 )
 
+var input = make([]byte, (1024 * 4))
+
 func Processing() {
-	listener, err := net.Listen("tcp", ":3223")
+	address := config.AppConfig.Network.Address
+	listener, err := net.Listen("tcp", address)
 	if err != nil {
-		fmt.Println(err)
-		return
+		logger.Log.Errorw("connection error: %v", err)
+		os.Exit(1)
 	}
 	defer func() {
 		if err := listener.Close(); err != nil {
@@ -21,10 +26,10 @@ func Processing() {
 	}()
 
 	workerCount := 10
-	channel := make(chan net.Conn)
+	channel := make(chan net.Conn, 1)
 
 	for i := 0; i < workerCount; i++ {
-		go workers(channel)
+		go StartWorkerPool(channel)
 	}
 
 	for {
@@ -37,7 +42,7 @@ func Processing() {
 
 }
 
-func workers(connChan <-chan net.Conn) {
+func StartWorkerPool(connChan <-chan net.Conn) {
 	for conn := range connChan {
 		HandleConnections(conn)
 	}
@@ -50,10 +55,9 @@ func HandleConnections(conn net.Conn) {
 		}
 	}()
 	for {
-		input := make([]byte, (1024 * 4))
 		n, err := conn.Read(input)
 		if n == 0 || err != nil {
-			fmt.Println(err)
+			logger.Log.Errorw("reading error: %v", err)
 			break
 		}
 		query := string(input[0:n])

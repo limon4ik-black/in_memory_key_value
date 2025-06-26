@@ -1,0 +1,8 @@
+2025-06-26T17:26:35.953+0300	INFO	project launch
+2025-06-26T17:27:14.848+0300	INFO	command	{"SET": "successfully"}
+2025-06-26T17:27:23.641+0300	INFO	command	{"GET": "successfully"}
+2025-06-26T17:27:39.600+0300	INFO	command	{"SET": "successfully"}
+2025-06-26T17:27:46.573+0300	INFO	command	{"GET": "successfully"}
+2025-06-26T17:27:54.288+0300	INFO	command	{"DEL": "successfully"}
+2025-06-26T17:27:58.987+0300	ERROR	command	{"GET": "non-existent key"}
+2025-06-26T17:28:04.760+0300	ERROR	reading error: %v	{"error": "EOF"}
