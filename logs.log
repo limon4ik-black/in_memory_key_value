@@ -1,9 +1,4 @@
-2025-06-21T16:19:45.997+0300	INFO	project launch
-2025-06-21T16:20:00.824+0300	INFO	command	{"SET": "successfully"}
-2025-06-21T16:20:08.668+0300	INFO	command	{"SET": "successfully"}
-2025-06-21T16:20:14.012+0300	INFO	command	{"SET": "successfully"}
-2025-06-21T16:20:21.613+0300	INFO	command	{"GET": "successfully"}
-2025-06-21T16:20:29.009+0300	ERROR	incorresct command word in request	{"command": "set vdv hfjs"}
-2025-06-21T16:20:32.790+0300	ERROR	incorresct command word in request	{"command": "fr ru\\"}
-2025-06-21T16:20:35.494+0300	ERROR	incorresct command word in request	{"command": "get hrv"}
-2025-06-21T16:20:38.355+0300	ERROR	incorresct command word in request	{"command": "Get rvrv"}
+2025-06-30T17:04:24.475+0300	INFO	project launch
+2025-06-30T17:04:45.009+0300	INFO	command	{"SET": "successfully"}
+2025-06-30T17:04:49.876+0300	INFO	command	{"GET": "successfully"}
+2025-06-30T17:04:55.077+0300	ERROR	reading error: %v	{"error": "EOF"}

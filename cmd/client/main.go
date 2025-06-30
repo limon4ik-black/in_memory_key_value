@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"net"
 	"os"
@@ -14,7 +15,15 @@ import (
 var buff = make([]byte, 1024)
 
 func main() {
-	config.LoadConfig("/Users/limon4ik/Desktop/in_memory_key_value/internal/config/config.yml")
+	configPath := flag.String("config-file", "", "Path to config file (YAML)")
+	flag.Parse()
+
+	if *configPath == "" {
+		fmt.Println("Usage: ./server --config-file=path/to/config.yml")
+		os.Exit(1)
+	}
+	config.LoadConfig(*configPath)
+
 	address := config.AppConfig.Network.Address
 	conn, err := net.Dial("tcp", address)
 	if err != nil {
