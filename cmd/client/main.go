@@ -18,6 +18,8 @@ func main() {
 	configPath := flag.String("config-file", "", "Path to config file (YAML)")
 	flag.Parse()
 
+	logger.StartLog()
+
 	if *configPath == "" {
 		fmt.Println("Usage: ./server --config-file=path/to/config.yml")
 		os.Exit(1)
