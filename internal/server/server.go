@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"strings"
 
 	"github.com/limon4ik-black/in_memory_key_value/internal/compute"
 	"github.com/limon4ik-black/in_memory_key_value/internal/config"
@@ -81,14 +82,15 @@ func HandleConnections(conn net.Conn) {
 			break
 		}
 		query := string(input[0:n])
-
-		if w != nil {
-			if err := w.WriteToWal(query); err != nil {
-				logger.Log.Errorw("failed to write to WAL: %v", err)
-				os.Exit(1)
+		words := strings.Fields(query)
+		if words[0] != "GET" {
+			if w != nil {
+				if err := w.WriteToWal(query); err != nil {
+					logger.Log.Errorw("failed to write to WAL: %v", err)
+					os.Exit(1)
+				}
 			}
 		}
-
 		target, _ := compute.Reception(query)
 
 		fmt.Println(query, "-", target)
