@@ -24,7 +24,7 @@ type WAL struct {
 func InitWal(dir string, maxSize int) (*WAL, error) {
 
 	if err := os.MkdirAll(dir, 0755); err != nil {
-		logger.Log.Errorw("Error mkdir for wal")
+		logger.Log.Errorw("failed to create wal directory", "directory", dir, "error", err)
 		return nil, err
 	}
 
@@ -46,7 +46,7 @@ func InitWal(dir string, maxSize int) (*WAL, error) {
 		path := fmt.Sprintf("%s/wal_%05d.log", wal.dir, wal.index)
 		cur_file, err := os.OpenFile(path, os.O_APPEND|os.O_WRONLY, 0644)
 		if err != nil {
-			logger.Log.Errorw("failed to open exist wal-file")
+			logger.Log.Errorw("failed to open exist wal-file", "path", path, "error", err)
 		}
 		wal.currentFile = cur_file
 		fileinfo, _ := os.Stat(path)
@@ -62,10 +62,10 @@ func (w *WAL) AddFile() error {
 		w.currentFile.Close()
 	}
 
-	path := fmt.Sprintf("%s/wal_%05d.log", w.dir, w.index)
+	path := fmt.Sprintf("%s/wal_%05d.log", w.dir, w.index+1)
 	file, err := os.Create(path)
 	if err != nil {
-		logger.Log.Errorw("Error touch wal-file")
+		logger.Log.Errorw("failed added new wal-file", "error", err)
 		return err
 	}
 	w.index++
